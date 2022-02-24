@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "9a2d69a4-0ee3-4119-adeb-0f7b2d375bac"
+    "analytics": "b2d8b609-c772-47cc-ba9a-fa8e3d3d9edf"
   },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-hola-mundo": {
+    "angular-wishlist": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-hola-mundo",
+            "outputPath": "dist/angular-wishlist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-hola-mundo:build:production"
+              "browserTarget": "angular-wishlist:build:production"
             },
             "development": {
-              "browserTarget": "angular-hola-mundo:build:development"
+              "browserTarget": "angular-wishlist:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-hola-mundo:build"
+            "browserTarget": "angular-wishlist:build"
           }
         },
         "test": {
@@ -105,5 +105,5 @@
       }
     }
   },
-  "defaultProject": "angular-hola-mundo"
+  "defaultProject": "angular-wishlist"
 }
