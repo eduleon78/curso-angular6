@@ -8,17 +8,18 @@ import { AppState } from '../../app.module';
 @Component({
   selector: 'app-lista-destinos',
   templateUrl: './lista-destinos.component.html',
-  styleUrls: ['./lista-destinos.component.css']
+  styleUrls: ['./lista-destinos.component.css'],
+  providers: [ DestinosApiClient ]
 })
 export class ListaDestinosComponent implements OnInit {
-  @Output() onIntemAdded: EventEmitter<DestinoViaje>;
+  @Output() onItemAdded: EventEmitter<DestinoViaje>;
   updates: string[];
 
   constructor(
-    private destinosApiClient:DestinosApiClient, 
-    private store: Store: <AppState>
+    public destinosApiClient:DestinosApiClient, 
+    private store: Store<AppState>
     ) {
-    this.onIntemAdded = new EventEmitter();
+    this.onItemAdded = new EventEmitter();
     this.updates = [];
 
   }
@@ -33,16 +34,12 @@ export class ListaDestinosComponent implements OnInit {
       });
   }
 
-  agregado(d: DestinoViaje): void{
-    this.destinosApiClient.add(d);
-    //this.onIntemAdded.emit(d);
+   agregado(d: DestinoViaje) {
+    //this.destinosApiClient.add(d);
+    this.onItemAdded.emit(d);
   }
 
-  elegido(d: DestinoViaje): void {
+  elegido(d: DestinoViaje) {
     this.destinosApiClient.elegir(d);
-  }
-
-  getAll() {
-
   }
 }

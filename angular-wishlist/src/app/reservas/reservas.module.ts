@@ -8,14 +8,14 @@ import { ReservasApiClientService } from './reservas-api-client-service';
 
 
 @NgModule({
-  declarations: [
-    ReservasListadoComponent, ReservasDetalleComponent],
-    providers: [
-      ReservasApiClientService
-    ]
   imports: [
     CommonModule,
     ReservasRoutingModule
-  ]
+  ],
+  providers: [
+    ReservasApiClientService
+  ],
+  declarations: [ ReservasListadoComponent, ReservasDetalleComponent ] 
+  
 })
 export class ReservasModule { }

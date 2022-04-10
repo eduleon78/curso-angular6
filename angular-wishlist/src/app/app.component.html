@@ -1,13 +1,11 @@
 <div class="page-header">
   <div style="float: right;">
-    <select (change)="translate.use($event.target.value)">
+    <select >
       <option value="es">Español</option>
       <option value="fr">Frances</option>
       <option value="en">English</option>
     </select>
   </div>
-
-
   <div class="container">
     <h1>Routing Simple</h1>
     <div class="navLinks">
@@ -18,9 +16,9 @@
   
 <div class="container content">
   <div class="row">
-    <h1>
+    <!-- <h1>
       {{ title }} <b [innerHTML]="'HOLA' | translate"></b> 
-    </h1>
+    </h1> -->
   </div>
 
   <router-outlet></router-outlet>

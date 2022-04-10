@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.css';
+@import '~mapbox/dist/mapbox-gl.css';
+@import '~@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:ital@1&family=Ubuntu:wght@500;700&display=swap');
 section{

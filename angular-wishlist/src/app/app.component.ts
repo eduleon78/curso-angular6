@@ -1,25 +1,26 @@
+import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'angular-wishlist';
-  time = new Observable(observer => {
+  time = new Observable<string>(observer => {
   setInterval(() => observer.next(new Date().toString()), 1000);
-    return null;
   });
 
-  constructor(private translate: TranslateService) {
-    console.log('******************* get tranlation');
+  constructor(public translate: TranslateService) {
+    console.log('******************* get translation');
     translate.getTranslation('en').subscribe(x => console.log('x: ' + JSON.stringify(x)));
+    translate.setDefaultLang('es');
   }
 
-  destinoAgregado(d) {
+  destinoAgregado() {
     //alert(d.nombre)
   }
 }

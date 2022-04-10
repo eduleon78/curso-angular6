@@ -1,10 +1,9 @@
-import { Component, EventEmitter, forwardRef, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, Inject, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 import { DestinoViaje } from '../../models/destino-viaje.model';
-import { inject } from '@angular/core/testing';
 import { AppConfig, APP_CONFIG } from 'src/app/app.module';
 
 @Component({
@@ -13,21 +12,22 @@ import { AppConfig, APP_CONFIG } from 'src/app/app.module';
   styleUrls: ['./form-destino-viaje.component.css']
 })
 export class FormDestinoViajeComponent implements OnInit {
+  
+  @Output() onItemAdded: EventEmitter<DestinoViaje>;
+  searchResults: any;
   fg: FormGroup;
   minLongitud:number = 3;
-  @Output() onItemAdded: EventEmitter<DestinoViaje>;
-  searchResults: string[] = [];
 
-  constructor(fb: FormBuilder, @inject(forwardRef(() => APP_CONFIG)) private config: AppConfig) { 
+  constructor(fb: FormBuilder, @Inject(forwardRef(() => APP_CONFIG)) private config: AppConfig) { 
     this.onItemAdded = new EventEmitter();
 
-    this.fg = fb.group({
-      nombre: ['', Validators.compose([
-        Validators.required,
-        this.nombreValidator,
-        this.nombreValidatorParametrizable(this.minLongitud)
-      ])],
-      url: ['']
+      this.fg = fb.group({
+        nombre: ['', Validators.compose([
+          Validators.required,
+          this.nombreValidator,
+          this.nombreValidatorParametrizable(this.minLongitud)
+        ])],
+        url: ['']
     });
 
     this.fg.valueChanges.subscribe(
@@ -45,7 +45,7 @@ export class FormDestinoViajeComponent implements OnInit {
           filter(text => text.length > 2),
           debounceTime(120),
           distinctUntilChanged(),
-          switchMap((text: string) => ajax(this.config.apiEndPoint + '/ciudades?q=' + text))
+          switchMap((text: string) => ajax(this.config.apiEndpoint + '/ciudades?q=' + text))
         ).subscribe(ajaxResponse => this.searchResults = ajaxResponse.response);
   }
 
@@ -55,24 +55,23 @@ export class FormDestinoViajeComponent implements OnInit {
     return false;
   }
 
-  nombreValidator(control: FormControl): { [s: string]: boolean  } {
+  nombreValidator(control: FormControl): ValidationErrors | null {
     const l = control.value.toString().trim().length;
     if (l > 0 && l < 5) {
-      return { invalidNombre: true };
-      
+      return { 'invalidNombre': true };      
     }
+
     return null;
+
   }
 
   nombreValidatorParametrizable(minLong: number): ValidatorFn {
     return (control: AbstractControl): { [s: string]: boolean } | null => {
       const l = control.value.toString().trim().length;
       if (l > 0 && l < minLong) {
-
-        return { minLongNombre: true };
+        return { 'minLongNombre': true };
       }
       return null;
-
     }
   }
 

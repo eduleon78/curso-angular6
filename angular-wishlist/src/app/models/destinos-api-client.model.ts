@@ -5,10 +5,8 @@ import {
   ElegidoFavoritoAction, 
   NuevoDestinoAction 
 } from "./destinos-viajes-state.model";
-import { AppConfig, AppState, APP_CONFIG, db } from "../app.module";
-import { HttpClient, HttpClientModule, HttpHeaders, HttpRequest, HttpResponse } from "@angular/common/http";
-import { state } from "@angular/animations";
-
+import { AppConfig, APP_CONFIG, AppState } from "../app.module";
+import { HttpRequest, HttpHeaders, HttpClient, HttpEvent, HttpResponse } from "@angular/common/http";
 
 @Injectable()
 export class DestinosApiClient {
@@ -33,21 +31,21 @@ export class DestinosApiClient {
       });
     }
 
-    add(d: DestinoViaje){
+    add(d: DestinoViaje) {
       const headers: HttpHeaders = new HttpHeaders({'X-API-TOKEN': 'token-seguridad'});
-      const req = new HttpRequest('POST', this.config.apiEndPoint + '/my', { nuevo: d.nombre }, { headers: headers });
+      const req = new HttpRequest('POST', this.config.apiEndpoint + '/my', { nuevo: d.nombre }, { headers: headers });
       this.http.request(req).subscribe((data: HttpResponse<{}>) => {
         if (data.status === 200) {
           this.store.dispatch(new NuevoDestinoAction(d));
           const myDb = db;
           myDb.destinos.add(d);
           console.log('todos los destinos de la db!');
-          myDb.destinos.toArray().then(destinos => console.log(destinos));
+          myDb.destinos.toArray().then((destinos: any) => console.log(destinos))
         }
       });
     }
   
-    getById(id: string): DestinoViaje {
+    getById(id: String): DestinoViaje {
       return this.destinos.filter(function(d) { return d.id.toString() === id; })[0];
     }
 

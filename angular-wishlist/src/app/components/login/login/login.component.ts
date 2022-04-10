@@ -21,16 +21,15 @@ export class LoginComponent implements OnInit {
     if (!this.authService.login(username, password)) {
       this.mensajeError = 'Login incorrecto';
       setTimeout(function() {
-        this.mensajeError = '';
+      //this.mensajeError = '';
       }.bind(this), 2500); 
     }
     return false;
   }
 
   logout(): boolean {
-    this.authService.logout(){
+    this.authService.logout();
       return false;
-    }
   }
 
 }

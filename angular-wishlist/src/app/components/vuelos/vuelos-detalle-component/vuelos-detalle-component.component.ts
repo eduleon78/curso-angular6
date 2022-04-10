@@ -6,10 +6,10 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './vuelos-detalle-component.component.html',
   styleUrls: ['./vuelos-detalle-component.component.css']
 })
-export class VuelosDetalleComponentComponent implements OnInit {
+export class VuelosDetalleComponent implements OnInit {
   id: any;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(public route: ActivatedRoute) {
     route.params.subscribe(params => { this.id = params['id']; });
    }
 

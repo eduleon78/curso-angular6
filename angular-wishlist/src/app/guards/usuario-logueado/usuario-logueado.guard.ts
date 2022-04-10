@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UsuarioLogueadoGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
-  CanActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | Promise<boolean | boolean {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const isLoggedIn = this.authService.isLoggedIN();
     console.log('canActive', isLoggedIn);
     return isLoggedIn;
